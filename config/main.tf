@@ -52,11 +52,20 @@ variable "lan_domain" {
   type = string
 }
 
+variable "debian_mac" {
+  type = string
+}
+
+variable "debian_fqdn" {
+  type = string
+}
+
 locals {
   lan_gateway_ip       = split("/", var.lan_ip_cidr)[0]
   lan_pool_range_first = 10
   lan_pool_range_last  = 254
   lan_pool_range       = "${cidrhost(var.lan_ip_cidr, local.lan_pool_range_first)}-${cidrhost(var.lan_ip_cidr, local.lan_pool_range_last)}"
+  debian_ip            = cidrhost(var.lan_ip_cidr, local.lan_pool_range_first)
 }
 
 output "chr_mac" {
@@ -150,4 +159,20 @@ resource "routeros_ip_dhcp_server_network" "lan" {
   gateway    = local.lan_gateway_ip
   dns_server = [local.lan_gateway_ip]
   domain     = var.lan_domain
+}
+
+# see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/ip_dhcp_server_lease
+resource "routeros_ip_dhcp_server_lease" "debian" {
+  server      = routeros_ip_dhcp_server.lan.name
+  mac_address = var.debian_mac
+  address     = local.debian_ip
+  comment     = var.debian_fqdn
+}
+
+# NB this will also create a reverse PTR record (e.g. 10.88.168.192.in-addr.arpa.).
+# see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/ip_dns_record
+resource "routeros_ip_dns_record" "debian" {
+  name    = var.debian_fqdn
+  type    = "A"
+  address = routeros_ip_dhcp_server_lease.debian.address
 }

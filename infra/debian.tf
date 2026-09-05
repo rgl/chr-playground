@@ -9,6 +9,12 @@ locals {
   debian_os_id = "http://debian.org/debian/${regex("debian-([^-]+)", var.debian_volume_name)[0]}"
 }
 
+# see https://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses
+locals {
+  debian_mac  = format("02:00:00:00:01:%02x", 2)
+  debian_fqdn = "debian.${var.lan_domain}"
+}
+
 # create a cloud-init cloud-config.
 # NB this creates an iso image that will be used by the NoCloud cloud-init datasource.
 # see journalctl -u cloud-init
@@ -41,6 +47,7 @@ resource "libvirt_cloudinit_disk" "debian" {
   EOF
   user_data      = <<-EOF
   #cloud-config
+  fqdn: ${local.debian_fqdn}
   manage_etc_hosts: true
   users:
     - name: vagrant
@@ -222,6 +229,9 @@ resource "libvirt_domain" "debian" {
         type = "network"
         model = {
           type = "virtio"
+        }
+        mac = {
+          address = local.debian_mac
         }
         source = {
           network = {

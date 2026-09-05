@@ -81,6 +81,8 @@ resource "local_file" "output_config" {
     chr_username = "admin"
     chr_password = ""
     lan_domain   = var.lan_domain
+    debian_mac   = local.debian_mac
+    debian_fqdn  = local.debian_fqdn
   })
   filename        = "${path.module}/../config/infra.auto.tfvars"
   file_permission = 0444
