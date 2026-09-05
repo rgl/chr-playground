@@ -51,6 +51,7 @@ variable "lan_domain" {
 # see https://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses
 locals {
   chr_ether1_mac = format("02:00:00:00:00:%02x", 1)
+  chr_ether2_mac = format("02:00:00:00:00:%02x", 2)
 }
 
 locals {

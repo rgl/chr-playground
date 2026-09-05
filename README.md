@@ -22,6 +22,8 @@ Be aware that the terraform-routeros provider does not handle all the CHR API en
 
 Install Ubuntu, QEMU, libvirt, and Terraform.
 
+Create and install the [base Debian 13 UEFI vagrant box](https://github.com/rgl/debian-vagrant).
+
 Create `chr-{version}.qcow2` libvirt volume:
 
 ```bash

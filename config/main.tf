@@ -109,6 +109,13 @@ resource "routeros_interface_bridge" "lan" {
   name = "lan"
 }
 
+# see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/interface_bridge_port
+resource "routeros_interface_bridge_port" "lan_ether2" {
+  bridge    = routeros_interface_bridge.lan.name
+  interface = "ether2"
+  comment   = "debian"
+}
+
 # see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/ip_firewall_nat
 resource "routeros_ip_firewall_nat" "lan_masquerade" {
   comment            = "lan"

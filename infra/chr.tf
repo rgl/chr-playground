@@ -28,6 +28,12 @@ resource "libvirt_network" "chr_ether1" {
   ]
 }
 
+# see https://registry.terraform.io/providers/dmacvicar/libvirt/0.9.9/docs/resources/network
+# see https://github.com/dmacvicar/terraform-provider-libvirt/blob/v0.9.9/docs/resources/network.md
+resource "libvirt_network" "chr_ether2" {
+  name = "${var.prefix}-chr-ether2"
+}
+
 # see https://registry.terraform.io/providers/dmacvicar/libvirt/0.9.9/docs/resources/volume
 # see https://github.com/dmacvicar/terraform-provider-libvirt/blob/v0.9.9/docs/resources/volume.md
 resource "libvirt_volume" "chr_root" {
@@ -151,6 +157,20 @@ resource "libvirt_domain" "chr" {
           }
         }
         wait_for_ip = {}
+      },
+      {
+        type = "network"
+        model = {
+          type = "virtio"
+        }
+        mac = {
+          address = local.chr_ether2_mac
+        }
+        source = {
+          network = {
+            network = libvirt_network.chr_ether2.name
+          }
+        }
       },
     ]
   }
