@@ -106,6 +106,17 @@ ssh "admin@$(terraform output -raw chr_ip)" /export verbose #show-sensitive
 popd
 ```
 
+Using the `chr` router host as the ssh jump host, access the `debian` host:
+
+```bash
+pushd config
+ssh -J "admin@$(terraform output -raw chr_ip)" "vagrant@$(terraform output -raw debian_fqdn)"
+echo $SSH_CONNECTION
+cat /etc/os-release
+exit
+popd
+```
+
 Destroy everything:
 
 ```bash

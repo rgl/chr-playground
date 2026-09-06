@@ -80,9 +80,35 @@ output "chr_url" {
   value = var.chr_url
 }
 
+output "debian_mac" {
+  value = var.debian_mac
+}
+
+output "debian_ip" {
+  value = local.debian_ip
+}
+
+output "debian_fqdn" {
+  value = var.debian_fqdn
+}
+
 # see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/system_identity
 resource "routeros_system_identity" "chr" {
   name = "chr"
+}
+
+# see https://manual.mikrotik.com/docs/management-tools/ssh#ssh-server
+# see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/ip_ssh_server
+resource "routeros_ip_ssh_server" "chr" {
+  strong_crypto      = true
+  forwarding_enabled = "both"
+}
+
+# see https://manual.mikrotik.com/docs/management-tools/ssh#enabling-pki-authentication
+# see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/system_user_sshkeys
+resource "routeros_system_user_sshkeys" "admin" {
+  user = "admin"
+  key  = trimspace(file("~/.ssh/id_rsa.pub"))
 }
 
 # see https://registry.terraform.io/providers/terraform-routeros/routeros/1.99.1/docs/resources/ip_dns
