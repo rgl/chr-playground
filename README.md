@@ -1,5 +1,7 @@
 # About
 
+[![Lint](https://github.com/rgl/chr-playground/actions/workflows/lint.yml/badge.svg)](https://github.com/rgl/chr-playground/actions/workflows/lint.yml)
+
 My [MikroTik Cloud Hosted Router (CHR) (aka RouterOS)](https://manual.mikrotik.com/docs/introduction) playground.
 
 This uses the [terraform-routeros provider](https://github.com/terraform-routeros/terraform-provider-routeros) to configure the router.
