@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.16.0"
+  required_version = "1.16.4"
   required_providers {
     # see https://registry.terraform.io/providers/terraform-routeros/routeros
     # see https://github.com/terraform-routeros/terraform-provider-routeros

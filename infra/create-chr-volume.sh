@@ -4,7 +4,7 @@ set -x
 
 # download the chr image and upload it to a libvirt volume.
 # see https://mikrotik.com/download/chr
-CHR_VERSION='7.21.5'
+CHR_VERSION='7.23.7'
 CHR_URL="https://download.mikrotik.com/routeros/$CHR_VERSION/chr-$CHR_VERSION.img.zip"
 rm -rf "tmp/chr-$CHR_VERSION-box"
 install -d "tmp/chr-$CHR_VERSION-box"

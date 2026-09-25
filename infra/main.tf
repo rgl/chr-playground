@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.16.0"
+  required_version = "1.16.4"
   required_providers {
     # see https://developer.hashicorp.com/terraform/language/functions/terraform-encode_tfvars
     terraform = {
@@ -10,7 +10,7 @@ terraform {
     # see https://github.com/hashicorp/terraform-provider-local
     local = {
       source  = "hashicorp/local"
-      version = "2.9.0"
+      version = "2.9.1"
     }
     # see https://registry.terraform.io/providers/dmacvicar/libvirt
     # see https://github.com/dmacvicar/terraform-provider-libvirt
@@ -72,7 +72,7 @@ output "chr_url" {
   value = local.chr_url
 }
 
-# see https://registry.terraform.io/providers/hashicorp/local/2.9.0/docs/resources/file
+# see https://registry.terraform.io/providers/hashicorp/local/2.9.1/docs/resources/file
 resource "local_file" "output_config" {
   content = provider::terraform::encode_tfvars({
     chr_mac      = local.chr_mac
