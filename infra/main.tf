@@ -52,6 +52,7 @@ variable "lan_domain" {
 locals {
   chr_ether1_mac = format("02:00:00:00:00:%02x", 1)
   chr_ether2_mac = format("02:00:00:00:00:%02x", 2)
+  chr_ether3_mac = format("02:00:00:00:00:%02x", 3)
 }
 
 locals {

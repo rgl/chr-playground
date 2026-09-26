@@ -172,6 +172,20 @@ resource "libvirt_domain" "chr" {
           }
         }
       },
+      {
+        type = "network"
+        model = {
+          type = "virtio"
+        }
+        mac = {
+          address = local.chr_ether3_mac
+        }
+        source = {
+          bridge = {
+            bridge = "chr0"
+          }
+        }
+      },
     ]
   }
 }

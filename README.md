@@ -34,6 +34,12 @@ pushd infra
 popd
 ```
 
+Create a bridge to the physical world:
+
+```bash
+sudo ./bridge.sh create chr0 eth1
+```
+
 Create the infrastructure:
 
 ```bash
@@ -128,4 +134,5 @@ popd
 pushd infra
 terraform destroy
 popd
+sudo ./bridge.sh delete chr0 eth1
 ```
